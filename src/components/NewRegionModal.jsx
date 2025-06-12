@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-export default function RegionEditor({ initialName = '', initialType = 'Region', onSave, onCancel }) {
+export default function NewRegionModal({ initialName = '', initialType = 'Region', onSave, onCancel }) {
   const [name, setName] = useState(initialName);
   const [type, setType] = useState(initialType);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name.trim() === '') return; // Require a name
+    if (name.trim() === '') return;
     onSave(name, type);
   };
 
@@ -56,6 +56,7 @@ export default function RegionEditor({ initialName = '', initialType = 'Region',
             <option value="Region">Region</option>
             <option value="Country">Country</option>
             <option value="Province">Province</option>
+            <option value="Ocean">Ocean</option>
             {/* Add your region types here */}
           </select>
         </label>

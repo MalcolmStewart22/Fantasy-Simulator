@@ -1,6 +1,9 @@
 import { doesSelfIntersect, linesIntersect, pointInPolygon } from '../utils/PolygonUtils';
+import React, { useState }  from 'react';
 
 export default function RegionOverlay({ region, mapRef, isDrawing = false, hoverPoint = null, parentRegion = null }) {
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+    
     if (!region?.points?.length || !mapRef?.current) return null;
 
     const rect = mapRef.current.getBoundingClientRect();
@@ -50,7 +53,7 @@ export default function RegionOverlay({ region, mapRef, isDrawing = false, hover
         ? lineIntersectsPolygon(scaledHoverPoint, firstPoint, scaledPointsArr)
         : false;
         
-    if (region.type != 'Continent' && region.type != 'World' && hoverPoint){
+    if (region.type != 'Continent' && region.type != 'World' && hoverPoint && region.type != 'Region'){
         const scaledParentsPoints = parentRegion.points.map(p => ({ x: p.x * scaleX, y: p.y * scaleY}));
         const selfIntersects = lineIntersectsPolygon(lastPoint, scaledHoverPoint, scaledPointsArr);
         const isInsideParent = pointInPolygon(scaledHoverPoint, scaledParentsPoints);
@@ -115,7 +118,23 @@ export default function RegionOverlay({ region, mapRef, isDrawing = false, hover
                     fill="white"
                     stroke="blue"
                     strokeWidth={2}
+                    style={{ pointerEvents: 'auto' }}
+                    onMouseEnter={() => setTooltipVisible(true)}
+                    onMouseLeave={() => setTooltipVisible(false)}
                 />
+            )}
+            {tooltipVisible && (
+                <foreignObject x={scaledPointsArr[0].x + 10} y={scaledPointsArr[0].y - 10} width={150} height={30} style={{ pointerEvents: 'auto' }}>
+                    <div className="tooltip"
+                    style={{
+                        background: 'rgba(255, 254, 254, 0.8)',
+                        color: 'black',
+                        padding: '4px 10px',
+                        fontSize: '12px',
+                        display: 'inline-block',
+                        borderRadius: '4px'}}
+                    >Click to finish region</div>
+                </foreignObject>
             )}
         </svg>
     );

@@ -12,7 +12,7 @@ export default function MapToolbar({ toolMode, setToolMode }) {
       padding: '10px',
       zIndex: 1000,
     }}>
-      {['location', 'region'].map((mode) => (
+      {['selection', 'location', 'region'].map((mode) => (
         <button
           key={mode}
           onClick={() => setToolMode(mode)}
@@ -25,7 +25,7 @@ export default function MapToolbar({ toolMode, setToolMode }) {
             cursor: 'pointer'
           }}
         >
-          {mode[0].toUpperCase() + mode.slice(1)} Tool
+          {mode[0].toUpperCase() + mode.slice(1)}
         </button>
       ))}
     </div>

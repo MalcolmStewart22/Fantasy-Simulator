@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-export default function LocationEditor({ 
+export default function NewLocationModal({ 
   location,
   onSave,   
   onCancel, 
-tempMarkerId, 
+markerId, 
 }) {
   const [name, setName] = useState('');
   const [type, setType] = useState('City');
@@ -25,7 +25,7 @@ tempMarkerId,
 const handleSubmit = () => {
   const newLocation = {
     id: location?.id || null,
-    tempMarkerId, 
+    markerId, 
     name,
     type,
     description,
