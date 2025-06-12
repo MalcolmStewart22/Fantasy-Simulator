@@ -379,7 +379,7 @@ useEffect(() => {
                     />
 
                 {regions.map((region) => (
-                    <RegionOverlay key={region.id} region={region} mapRef={mapRef} isDrawing={region === drawingRegion}/>
+                    <RegionOverlay key={region.id} region={region} mapRef={mapRef} isDrawing={region === drawingRegion} parentRegion={regions.find(r => r.id === region.parentId)}/>
                 ))}
 
                 {markers.map((marker) => (
@@ -402,7 +402,7 @@ useEffect(() => {
                 ))}
 
                 {drawingRegion && (
-                <RegionOverlay region={drawingRegion} mapRef={mapRef} isDrawing  hoverPoint={hoverPoint}/>
+                <RegionOverlay region={drawingRegion} mapRef={mapRef} isDrawing  hoverPoint={hoverPoint} parentRegion={regions.find(r => r.id === drawingRegion.parentId)}/>
                 )}
                 </div>                
             </div>
